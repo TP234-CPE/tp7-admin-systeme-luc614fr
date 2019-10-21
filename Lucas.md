@@ -145,18 +145,39 @@ part la commande kill**
 
 **1. Dans tty1, lancez la commande htop, puis tapez la commande w dans tty2. Qu’affiche cette commande ?**
 
+elle affiche les utilisateurs connecté, leurs ip si ils sont connecté a distance et leurs processus en cours 
+
 **2. Comment afficher l’historique des dernières connexions à la machine ?**
+
+il faut faire la commande `last` 
 
 **3. Quelle commande permet d’obtenir la version du noyau ?**
 
+il faut faire la commande `uname -r` 
+
 **4. Comment récupérer toutes les informations sur le processeur, au format JSON ?**
+
+il faut faire la commande `lshw -class Processor -json`  
 
 **5. Comment obtenir la liste des derniers démarrages de la machine avec la commande journalctl ?
 Comment afficher tout ce qu’il s’est passé sur la machine lors de l’avant-dernier boot ?**
 
+il faut faire la commande 
+
+```
+journalctl --list-boots
+journalctl -b -1
+``` 
+
+
 **6. Comment obtenir la liste des derniers démarrages de la machine avec la commande journalctl ?**
+
+journalctl --list-boots
+
 
 **7. Faites en sortes que lors d’une connexion à la machine, les utilisateurs soient prévenus par un message
 à l’écran d’une maintenance le 26 mars à minuit.**
+
+
 
 **8. Ecrivez un script bash qui permet de calculer le k-ième nombre de Fibonacci : Fk = Fk−1 + Fk−2, avec F0 = F1 = 1. Lancez le calcul de F100 puis lancez la commande tload depuis un autre terminal virtuel. Que constatez-vous ? Interrompez ensuite le calcul avec CTRL+C et observez la conséquence sur l’affichage de tload.**
