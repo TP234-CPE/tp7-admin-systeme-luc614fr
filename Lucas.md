@@ -122,7 +122,7 @@ done
 **2. Lancez votre script et appuyez sur CTRL+Z. Que se passe-t-il ? Comment faire pour que le script poursuive son exécution ?**
 
 la commande `CTRL+Z` met le sript en pause. <br>
-j'ai fait `fg k` pour que sa reprenne 
+j'ai fait `fg k` pour que ça reprenne 
 
 **3. Toujours pendant l’exécution du script, appuyez sur CTRL+C. Que se passe-t-il ?**
 
