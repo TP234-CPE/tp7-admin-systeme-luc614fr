@@ -56,7 +56,6 @@ keymap fr
 ``` 
 ## Exercice 2. Noyau
 
-Dans cet exercice, nous allons aborder le partitionnement LVM, beaucoup plus flexible pour manipuler les disques et les partitions.
 
 **1. Commencez par installer le paquet build-essential, qui contient tous les outils nécessaires (compilateurs, bibliothèques) à la compilation de programmes en C (entre autres).**
 
@@ -68,7 +67,17 @@ j'ai fait `touch hello.c`
 
 **3.  Créez également un fichier Makefile**
 
-j'ai fait `touch Makefile`  
+obj-m += hello.o
+
+ all:
+ make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+ clean:
+ make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+ install:
+ cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc
+
 
 **4. Compilez le module à l’aide de la commande make, puis installez-le à l’aide de la commande make
 install.**
@@ -81,16 +90,13 @@ insmod
 
 **6. Utilisez la commande modinfo pour obtenir des informations sur le module hello.ko ; vous devriez notamment voir les informations figurant dans le fichier C.**
 
-j'ai fait fdisk `/dev/mapper/volume1-1vData` puis `mkfs.ext4 /dev/mapper/volume1-1vData`
-j'ai rajouté dans le fstab la ligne `/dev/mapper/volume1-1vData      /data            ext4     defaults     0       0` 
 
 **7. Déchargez le module ; vérifiez dans le journal du noyau que le message ”La fonction cleanup_module() est appelée” a bien été inscrit, synonyme que le module a été déchargé ; confirmez avec la commande lsmod.**
 
-Fait
+j'ai fait `modprobe -r`  
 
 **8. Pour que le module soit chargé automatiquement au démarrage du système, il faut l’inscrire dans le fichier /etc/modules. Essayez, et vérifiez avec la commande lsmod après redémarrage de la machine.**
 
-j'ai fait la commande  `vgextend volume1 /dev/sdc1` 
 
 
 ## Exercice 3. Interception de signaux
