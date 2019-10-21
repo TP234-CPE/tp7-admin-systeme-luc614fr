@@ -62,11 +62,11 @@ Dans cet exercice, nous allons aborder le partitionnement LVM, beaucoup plus fle
 
 **1. Commencez par installer le paquet build-essential, qui contient tous les outils nécessaires (compilateurs, bibliothèques) à la compilation de programmes en C (entre autres).**
 
-j'ai fait la commande `umount /data` et `umount /win` pour démonter les systèmes de fichiers 
+j'ai fait la commande `apt install build-essential` 
 
 **2. Créez un fichier hello.c contenant le code suivant**
 
-j'ai fait la commande `fdisk /dev/sdb` puis d pour supprimé les deux partitions
+j'ai fait `touch hello.c` 
 
 **3.  Créez également un fichier Makefile**
 
@@ -84,7 +84,7 @@ cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc
 **4. Compilez le module à l’aide de la commande make, puis installez-le à l’aide de la commande make
 install.**
 
-j'ai fait `vgcreate volume1 /dev/sdb1` 
+
 
 **5. Chargez le module ; vérifiez dans le journal du noyau que le message ”La fonction init_module() est appelée” a bien été inscrit, synonyme que le module a été chargé ; confirmez avec la commande lsmod**
 
