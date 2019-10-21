@@ -80,7 +80,7 @@ j'ai fait `vgcreate volume1 /dev/sdb1`
 
 **5. Chargez le module ; vérifiez dans le journal du noyau que le message ”La fonction init_module() est appelée” a bien été inscrit, synonyme que le module a été chargé ; confirmez avec la commande lsmod**
 
-j'ai fait la commande `lvcreate -l 100%FREE -n 1vData volume1` 
+insmod
 
 **6. Utilisez la commande modinfo pour obtenir des informations sur le module hello.ko ; vous devriez notamment voir les informations figurant dans le fichier C.**
 
@@ -101,6 +101,15 @@ j'ai fait la commande  `vgextend volume1 /dev/sdc1`
 
 **1. . Commencez par écrire un script qui recopie dans un fichier tmp.txt chaque ligne saisie au clavier par
 l’utilisateur**
+
+j'ai fait 
+``` 
+#!/bin/bash
+while :; do
+read a
+echo $a >> tmp.txt
+done
+``` 
 
 **2. Lancez votre script et appuyez sur CTRL+Z. Que se passe-t-il ? Comment faire pour que le script poursuive son exécution ?**
 
