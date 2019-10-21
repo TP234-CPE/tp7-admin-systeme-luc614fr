@@ -174,6 +174,6 @@ journalctl --list-boots
 **7. Faites en sortes que lors d’une connexion à la machine, les utilisateurs soient prévenus par un message
 à l’écran d’une maintenance le 26 mars à minuit.**
 
-
+j'ai fait `nano /etc/motd` et j'ai écris a l'intérieur maintenance prévue le 26 mars a minuit 
 
 **8. Ecrivez un script bash qui permet de calculer le k-ième nombre de Fibonacci : Fk = Fk−1 + Fk−2, avec F0 = F1 = 1. Lancez le calcul de F100 puis lancez la commande tload depuis un autre terminal virtuel. Que constatez-vous ? Interrompez ensuite le calcul avec CTRL+C et observez la conséquence sur l’affichage de tload.**
