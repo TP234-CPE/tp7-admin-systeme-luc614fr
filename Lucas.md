@@ -13,14 +13,11 @@ GRUB_TIMEOUT=10 ; GRUB_TIMEOUT_STYLE=menu
 
 **3. Lancez la commande update-grub**
 
-J'ai d'abord fait: <br> - `fdisk /deb/sdb` puis j'ai mis `n`puis `p` `1` puis entrée puis `+2G` pour choisir 2Go. <br>
-
-J'ai refait les mêmes commande pour la seconde partition mais j'ai mis `+3G` et ensuite une fois créer on appuie sur t et on choisi la seconde partition le numéro 7 (NTFS)
+J'ai fait `update-grub` 
 
 **4. Redémarrez votre VM pour valider que les changements ont bien été pris en compte**
 
-J'ai fait la commande `mkfs.ext4 /dev/sdb1` pour la première partition 
-J'ai fait la commande `mkfs.ntfs /dev/sdb2` pour la deuxième partition 
+fait
 
 **5. On va augmenter la résolution de GRUB et de notre VM. Cherchez sur Internet le ou les paramètres à rajouter au fichier grub.**
 
@@ -71,21 +68,12 @@ j'ai fait `touch hello.c`
 
 **3.  Créez également un fichier Makefile**
 
-obj-m += hello.o
-
-all:
-make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
-
-clean:
-make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-
-install:
-cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc 
+j'ai fait `touch Makefile`  
 
 **4. Compilez le module à l’aide de la commande make, puis installez-le à l’aide de la commande make
 install.**
 
-
+make hello.o 
 
 **5. Chargez le module ; vérifiez dans le journal du noyau que le message ”La fonction init_module() est appelée” a bien été inscrit, synonyme que le module a été chargé ; confirmez avec la commande lsmod**
 
