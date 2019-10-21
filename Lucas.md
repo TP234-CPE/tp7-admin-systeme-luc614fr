@@ -70,8 +70,16 @@ j'ai fait la commande `fdisk /dev/sdb` puis d pour supprimé les deux partitions
 
 **3.  Créez également un fichier Makefile**
 
-j'ai fait `pvcreate /dev/sdb1` 
-j'ai créer une partitition normalement et ensuite j'ai fait `t` puis j'ai tapé le code `8E` 
+obj-m += hello.o
+
+all:
+make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+install:
+cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc 
 
 **4. Compilez le module à l’aide de la commande make, puis installez-le à l’aide de la commande make
 install.**
