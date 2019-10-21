@@ -121,9 +121,20 @@ done
 
 **2. Lancez votre script et appuyez sur CTRL+Z. Que se passe-t-il ? Comment faire pour que le script poursuive son exécution ?**
 
+la commande `CTRL+Z` met le sript en pause. <br>
+j'ai fait `fg k` pour que sa reprenne 
+
 **3. Toujours pendant l’exécution du script, appuyez sur CTRL+C. Que se passe-t-il ?**
 
+Il s'est arreté 
+
 **4. Modifiez votre script pour redéfinir les actions à effectuer quand le script reçoit les signaux SIGTSTP (= CTRL+Z) et SIGINT (=CTRL+C) : dans le premier cas, il doit afficher ”Impossible de me placer en arrière-plan”, et dans le second cas, il doit afficher  "OK, je fais un peu de ménage avant" avant de supprimer le fichier temporaire et terminer le script.**
+j'ai fait 
+``` 
+trap 'echo impossible de me placer en arrière-plan !' TSTP
+trap 'echo OK, je fais juste un peu de ménage avant ; exit' INT
+trap 'rm tmp.txt' EXIT
+``` 
 
 **5.Testez le nouveau comportement de votre script en utilisant d’une part les raccourcis clavier, d’autre
 part la commande kill**
