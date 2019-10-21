@@ -1,4 +1,4 @@
-# TP 6 - Boot, services et processus / Tâches d’administration (2)
+# TP 7 - Boot, services et processus / Tâches d’administration (2)
 
 ## Exercice 1. Personnalisation de GRUB
 
@@ -8,7 +8,7 @@ J'ai fait clique droit configuration -> stockage -> créer un nouveau disque dur
 
 **2. Modifiez le fichier /etc/default/grub pour que le menu de GRUB s’affiche pendant 10 secondes ; passé ce délai, le premier OS du menu doit être lancé automatiquement.**
 
-J'ai fait `fdisk -l`  
+GRUB_TIMEOUT=10 ; GRUB_TIMEOUT_STYLE=menu 
 
 **3. Lancez la commande update-grub**
 
@@ -23,28 +23,39 @@ J'ai fait la commande `mkfs.ntfs /dev/sdb2` pour la deuxième partition
 
 **5. On va augmenter la résolution de GRUB et de notre VM. Cherchez sur Internet le ou les paramètres à rajouter au fichier grub.**
 
-La commande df -T n'affiche pas le disque sdb car il n'est pas encore monté
+GRUB_GFXMODE=1280x1024,1024x768x32 GRUB_GFXPAYLOAD_LINUX=keep
 
 **6. On va à présent ajouter un fond d’écran. Il existe un paquet en proposant quelques uns : grub2-splash-images
 (après installation, celles-ci sont disponibles dans /usr/share/images/grub).**
 
-`nano /etc/fstab`
-on ajoute :
-```
-#device        mountpoint             fstype    options    dump   fsck
-/dev/sdb1      /data                   ext4     defaults     0       0
-/dev/sdb2      /win                    NTFS     defaults     0       0
-```
+GRUB_BACKGROUND="/home/image1".
 
 **7. Il est également possible de configurer des thèmes. On en trouve quelques uns dans les dépôts (grub2-themes-*).
 Installez-en un**
 
-La commande mount est la suivante `mount -a`. Oui les modifications sont permanentes même après le redémarage de la machine
+fait 
 
 **8.  Ajoutez une entrée permettant d’arrêter la machine, et une autre permettant de la redémarrer**
 
+/etc/grub.d/40_custom 
+```
+menuentry ’Arrêt du système’ {
+halt
+}
+menuentry ’Redémarrage du système’ {
+reboot
+}
+```
+
 **9. Configurer GRUB pour que le clavier soit en français**
 
+j'ai fait `mkdir /boot/grub/layouts` puis `grub-kbdcomp -o /boot/grub/layouts/fr.gkb fr` 
+j'ai fait dans /etc/default/grub `GRUB_TERMINAL_INPUT=at_keyboard` 
+j'ai fait dans /etc/grub.d/40_custom 
+```
+insmod keylayouts
+keymap fr
+``` 
 ## Exercice 2. Noyau
 
 Dans cet exercice, nous allons aborder le partitionnement LVM, beaucoup plus flexible pour manipuler les disques et les partitions.
