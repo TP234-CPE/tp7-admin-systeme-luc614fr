@@ -82,7 +82,6 @@ obj-m += hello.o
 **4. Compilez le module à l’aide de la commande make, puis installez-le à l’aide de la commande make
 install.**
 
-make hello.o 
 
 **5. Chargez le module ; vérifiez dans le journal du noyau que le message ”La fonction init_module() est appelée” a bien été inscrit, synonyme que le module a été chargé ; confirmez avec la commande lsmod**
 
@@ -98,7 +97,7 @@ j'ai fait `modprobe -r hello.ko`
 
 **8. Pour que le module soit chargé automatiquement au démarrage du système, il faut l’inscrire dans le fichier /etc/modules. Essayez, et vérifiez avec la commande lsmod après redémarrage de la machine.**
 
-
+Je vois le module hello.ko avec lsmod 
 
 ## Exercice 3. Interception de signaux
 
