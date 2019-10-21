@@ -1,5 +1,4 @@
-# TP 6 - Boot, services et processus / Tâches
-d’administration (2)
+# TP 6 - Boot, services et processus / Tâches d’administration (2)
 
 ## Exercice 1. Personnalisation de GRUB
 
@@ -7,26 +6,27 @@ d’administration (2)
 
 J'ai fait clique droit configuration -> stockage -> créer un nouveau disque dur virtuel 
 
-**2. Vérifiez que ce nouveau disque dur est bien détecté par le système**
+**2. Modifiez le fichier /etc/default/grub pour que le menu de GRUB s’affiche pendant 10 secondes ; passé ce délai, le premier OS du menu doit être lancé automatiquement.**
 
 J'ai fait `fdisk -l`  
 
-**3. Partitionnez ce disque en utilisant fdisk : créez une première partition de 2 Go de type Linux (n°83), et une seconde partition de 3 Go en NTFS (n°7)**
+**3. Lancez la commande update-grub**
 
 J'ai d'abord fait: <br> - `fdisk /deb/sdb` puis j'ai mis `n`puis `p` `1` puis entrée puis `+2G` pour choisir 2Go. <br>
 
 J'ai refait les mêmes commande pour la seconde partition mais j'ai mis `+3G` et ensuite une fois créer on appuie sur t et on choisi la seconde partition le numéro 7 (NTFS)
 
-**4. A ce stade, les partitions ont été créées, mais elles n’ont pas été formatées avec leur système de fichiers. A l’aide de la commande mkfs, formatez vos deux partitions ( pensez à consulter le manuel !)**
+**4. Redémarrez votre VM pour valider que les changements ont bien été pris en compte**
 
 J'ai fait la commande `mkfs.ext4 /dev/sdb1` pour la première partition 
 J'ai fait la commande `mkfs.ntfs /dev/sdb2` pour la deuxième partition 
 
-**5. Pourquoi la commande df -T, qui affiche le type de système de fichier des partitions, ne fonctionne-telle pas sur notre disque ?**
+**5. On va augmenter la résolution de GRUB et de notre VM. Cherchez sur Internet le ou les paramètres à rajouter au fichier grub.**
 
 La commande df -T n'affiche pas le disque sdb car il n'est pas encore monté
 
-**6. Faites en sorte que les deux partitions créées soient montées automatiquement au démarrage de la machine, respectivement dans les points de montage /data et /win (vous pourrez vous passer des UUID en raison de l’impossibilité d’effectuer des copier-coller)**
+**6. On va à présent ajouter un fond d’écran. Il existe un paquet en proposant quelques uns : grub2-splash-images
+(après installation, celles-ci sont disponibles dans /usr/share/images/grub).**
 
 `nano /etc/fstab`
 on ajoute :
@@ -36,11 +36,12 @@ on ajoute :
 /dev/sdb2      /win                    NTFS     defaults     0       0
 ```
 
-**7. Utilisez la commande mount puis redémarrez votre VM pour valider la configuration**
+**7. Il est également possible de configurer des thèmes. On en trouve quelques uns dans les dépôts (grub2-themes-*).
+Installez-en un**
 
 La commande mount est la suivante `mount -a`. Oui les modifications sont permanentes même après le redémarage de la machine
 
-**8. Montez votre clé USB dans la VM**
+**8.  Ajoutez une entrée permettant d’arrêter la machine, et une autre permettant de la redémarrer**
 
 **9. Créez un dossier partagé entre votre VM et votre système hôte (rem. il peut être nécessaire d’installer les Additions invité de VirtualBox**
 
