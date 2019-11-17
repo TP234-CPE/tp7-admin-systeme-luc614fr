@@ -138,6 +138,12 @@ part la commande kill**
 
 ## Exercice 4. Surveillance de l’activité du système
 
+Pour interdire tous les paquets en provenance de 192.168.1.11 :
+iptables -A INPUT -s 192.168.1.11 -j DROP
+-A INPUT : ajoute une règle à la chaîne INPUT
+-s : source du paquet
+-j DROP : cible (jump) de la règle, si elle est satisfaite
+
 **1. Dans tty1, lancez la commande htop, puis tapez la commande w dans tty2. Qu’affiche cette commande ?**
 
 elle affiche les utilisateurs connecté, leurs ip si ils sont connecté a distance et leurs processus en cours 
@@ -168,6 +174,7 @@ journalctl -b -1
 **6. Comment obtenir la liste des derniers démarrages de la machine avec la commande journalctl ?**
 
 journalctl --list-boots
+
 
 
 **7. Faites en sortes que lors d’une connexion à la machine, les utilisateurs soient prévenus par un message
