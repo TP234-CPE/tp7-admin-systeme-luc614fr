@@ -183,3 +183,96 @@ journalctl --list-boots
 j'ai fait `nano /etc/motd` et j'ai écris a l'intérieur maintenance prévue le 26 mars a minuit 
 
 **8. Ecrivez un script bash qui permet de calculer le k-ième nombre de Fibonacci : Fk = Fk−1 + Fk−2, avec F0 = F1 = 1. Lancez le calcul de F100 puis lancez la commande tload depuis un autre terminal virtuel. Que constatez-vous ? Interrompez ensuite le calcul avec CTRL+C et observez la conséquence sur l’affichage de tload.**
+
+## Exercice 2. Noyau
+Dans cet exercice, on va créer et installer un module pour le noyau.
+**1. Commencez par installer le paquet build-essential, qui contient tous les outils nécessaires (compi- lateurs, bibliothèques) à la compilation de programmes en C (entre autres).**
+
+**2. Créez un  chier hello.c contenant le code suivant :**
+
+      GRUB se con gure via un  chier de paramètres (/etc/default/grub), mais aussi par des scripts situés dans /etc/grub.d ; ces scripts commencent tous par un numéro et sont traités dans l’ordre.
+  
+ Sous Ubuntu Server, GRUB prend aussi en compte les  chiers d’extension .cfg présents dans /etc/default/grub.d. En particulier, sur les versions récentes, le  chier de con guration 50-curtin-settings.cfg donne à la variable GRUB_TERMINAL la valeur console, ce qui désactive tous les paramètres liés aux fonds d’écran, thèmes, certaines résolutions, etc.
+    Cette commande fait appel au script grub-mkconfig qui construit le  chier de con guration ” nal” de GRUB (/boot/grub/grub.cfg) à partir du  chier de paramètres et des scripts.
+       Pensez à lancer la commande update-grub après chaque modi cation de la con guration de GRUB !
+ 
+1 #include <linux/module.h>
+2 #include <linux/kernel.h>
+3
+4 MODULE_LICENSE("GPL");
+5 MODULE_AUTHOR("John Doe");
+6 MODULE_DESCRIPTION("Module hello world");
+7 MODULE_VERSION("Version 1.00");
+8
+9 int init_module(void)
+10 {
+11 printk(KERN_INFO "[Hello world] - La fonction init_module() est appelée.\n");
+12 return 0;
+13 }
+14
+15 void cleanup_module(void)
+16 {
+17 printk(KERN_INFO "[Hello world] - La fonction cleanup_module() est appelée.\n");
+18 }
+
+**3. Créez également un fichier Makefile :**
+
+
+```
+1 obj-m += hello.o 2
+3 all:
+4 make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+5
+6 clean:
+7 make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+8
+9 install:
+10 cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc  Les lignes 4, 7 et 10 doivent commencer par une tabulation.
+```
+**4. Compilez le module à l’aide de la commande make, puis installez-le à l’aide de la commande make install.
+ Le module est installé dans le dossier spéci é à la ligne 10.**
+
+
+**5. Chargez le module; véri ez dans le journal du noyau que le message ”La fonction init_module() est
+appelée” a bien été inscrit, synonyme que le module a été chargé ; con rmez avec la commande lsmod.**
+
+**6. Utilisez la commande modinfo pour obtenir des informations sur le module hello.ko; vous devriez
+notamment voir les informations  gurant dans le  chier C.**
+
+**7. Déchargez le module ; véri ez dans le journal du noyau que le message ”La fonction cleanup_module() est appelée” a bien été inscrit, synonyme que le module a été déchargé ; con rmez avec la commande lsmod.**
+
+**8. Pour que le module soit chargé automatiquement au démarrage du système, il faut l’inscrire dans le  chier /etc/modules. Essayez, et véri ez avec la commande lsmod après redémarrage de la machine.**
+
+
+
+##Exercice 3. Interception de signaux
+La commande interne trap permet de redé nir des gestionnaires pour les signaux reçus par un processus. Un cas d’utilisation typique est la suppression des  chiers temporaires créés par un script lorsque celui-ci est interrompu.
+**1. Commencez par écrire un script qui recopie dans un  chier tmp.txt chaque ligne saisie au clavier par l’utilisateur**
+
+**2. Lancez votre script et appuyez sur CTRL+Z. Que se passe-t-il ? Comment faire pour que le script pour- suive son exécution ?**
+
+**3. Toujours pendant l’exécution du script, appuyez sur CTRL+C. Que se passe-t-il ?**
+
+**4. Modi ez votre script pour redé nir les actions à e ectuer quand le script reçoit les signaux SIGTSTP (= CTRL+Z) et SIGINT (= CTRL+C) : dans le premier cas, il doit a cher ”Impossible de me placer en arrière-plan”, et dans le second cas, il doit a cher ”OK, je fais un peu de ménage avant” avant de supprimer le  chier temporaire et terminer le script.**
+
+          
+**5. Testez le nouveau comportement de votre script en utilisant d’une part les raccourcis clavier, d’autre part la commande kill**
+
+**6. Relancez votre script et faites immédiatement un CTRL+C : vous obtenez un message d’erreur vous indiquant que le  chier tmp.txt n’existe pas. A l’aide de la commande interne test, corrigez votre script pour que ce message n’apparaisse plus.**
+
+
+##Exercice 4. Surveillance de l’activité du système
+**1. Lancez la commande htop, puis ouvrez un second terminal (avec Alt + F2, ou Alt + F3...) et tapez la commande w dans tty2. Qu’a che cette commande ?**
+
+**2. Comment a cher l’historique des dernières connexions à la machine ?**
+
+**3. Quelle commande permet d’obtenir la version du noyau ?**
+
+**4. Comment récupérer toutes les informations sur le processeur, au format JSON ?**
+
+**5. Comment obtenir la liste des derniers démarrages de la machine avec la commande journalctl? Comment a cher tout ce qu’il s’est passé sur la machine lors de l’avant-dernier boot ?**
+
+**6. Faites en sortes que lors d’une connexion à la machine, les utilisateurs soient prévenus par un message à l’écran d’une maintenance le 26 mars à minuit.**
+
+**7. Ecrivez un script bash qui permet de calculer le k-ième nombre de Fibonacci : Fk = Fk−1 + Fk−2, avec F0 = F1 = 1. Lancez le calcul de F100 puis lancez la commande tload depuis un autre terminal virtuel. Que constatez-vous ? Interrompez ensuite le calcul avec CTRL+C et observez la conséquence sur l’a chage de tload.**
+
